@@ -75,9 +75,10 @@ graph TB
 
 ## Architectural Design
 
-### 1. Identity Federation (Okta & Cloud Identity)
-* **Identity Provider (IdP)**: Corporate user accounts are managed in an external IdP (Okta). Okta is federated with Google Cloud Identity to enable single sign-on.
-* **Identity-Aware Proxy (IAP)**: IAP acts as the gatekeeper for all workstation traffic. It intercepts requests, validates the federated credentials, checks IAM access permissions (`roles/workstations.user`), and forwards the connection.
+### 1. Identity Federation & Secure Access (Okta & IAP)
+* **Identity Provider (IdP)**: Corporate user accounts are managed in an external IdP (Okta), federated with Google Cloud Identity for Single Sign-On (SSO).
+* **Identity-Aware Proxy (IAP) for Web Traffic**: Natively managed by the Google Cloud Workstations service. GWS proxies HTTP/HTTPS traffic to the workstation container, enforcing access control based on user identity and IAM roles (`roles/workstations.user`) without manual IAP configuration.
+* **IAP TCP Forwarding for SSH Traffic**: Configured via Terraform. A firewall rule (`google_compute_firewall.iap-allow`) is deployed in the VPC to allow Google IAP forwarding IP ranges to establish SSH tunnels (port 22) to the workstation VM instances.
 
 ### 2. Multi-Project and Peering Layout
 * **Host Project (Shared VPC)**: Centralizes networking. The workstation VMs consume internal IP addresses in a Shared VPC subnet. 
