@@ -1,3 +1,5 @@
+# syntax=docker.io/docker/dockerfile:1.17.1
+
 # Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,9 +14,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-terraform {
-  backend "gcs" {
-    bucket = "acp-dev-terraform-massinissa-sandbox"
-    prefix = "terraform/cws/_shared_config/initialize"
-  }
-}
+ARG AR_PROJECT_ID
+ARG AR_LOCATION
+
+FROM ${AR_LOCATION}-docker.pkg.dev/${AR_PROJECT_ID}/acp-dev-cws-images-upstream/code-oss:latest
+
+ARG DEBIAN_FRONTEND="noninteractive"
+
+RUN apt-get update && \
+  apt-get upgrade -y && \
+  apt-get install -y \
+  build-essential \
+  gettext-base \
+  libffi-dev \
+  libz-dev \
+  libbz2-dev \
+  liblzma-dev \
+  libncursesw5-dev \
+  libreadline-dev \
+  libsqlite3-dev \
+  libssl-dev \
+  moreutils

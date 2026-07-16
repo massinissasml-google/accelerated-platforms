@@ -1,13 +1,18 @@
-# Copyright 2025 Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+cloudbuild_cws_image_pipeline_build_sa_name           = null
+cloudbuild_cws_image_pipeline_build_sa_project_id     = null
+cloudbuild_cws_image_pipeline_commit_changes          = true
+cloudbuild_cws_image_pipeline_connection_name         = null
+cloudbuild_cws_image_pipeline_gh_app_installation_id  = "94021545"
+cloudbuild_cws_image_pipeline_git_namespace           = "massinissasml-google"
+cloudbuild_cws_image_pipeline_git_provider            = "github.com"
+cloudbuild_cws_image_pipeline_git_repository_name     = "accelerated-platforms"
+cloudbuild_cws_image_pipeline_git_token_file          = null
+cloudbuild_cws_image_pipeline_git_token_project_id    = null
+cloudbuild_cws_image_pipeline_git_token_secret_id     = null
+cloudbuild_cws_image_pipeline_registry_name           = null
+cloudbuild_cws_image_pipeline_scheduler_sa_name       = null
+cloudbuild_cws_image_pipeline_scheduler_sa_project_id = null
+cloudbuild_cws_image_registry_name                    = null
+cloudbuild_cws_image_registry_upstream_name           = null
+cloudbuild_location                                   = null
+cloudbuild_project_id                                 = null

@@ -15,6 +15,6 @@
 terraform {
   backend "gcs" {
     bucket = "acp-dev-terraform-massinissa-sandbox"
-    prefix = "terraform/cws/_shared_config/initialize"
+    prefix = "terraform/cws/image_pipeline/github.com"
   }
 }
