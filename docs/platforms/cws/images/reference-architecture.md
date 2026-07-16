@@ -48,11 +48,10 @@ graph TB
     %% User Access Flow
     User["Developer / Creative User"] -->|1. Authenticate| Okta
     Okta -->|2. Assert Identity| CloudIdentity
-    User -->|3. Access Workstation URL| IAP["Identity-Aware Proxy (IAP)"]
-    IAP -->|4. Verify IAM Permissions| CloudIdentity
-    IAP -->|5. Proxy Connection| GWS_ControlPlane
-    GWS_ControlPlane -->|6. Connect| GWS_VM_CPU
-    GWS_ControlPlane -->|6. Connect| GWS_VM_GPU
+    User -->|3. Access Workstation URL| GWS_ControlPlane
+    GWS_ControlPlane -->|4. Verify IAM Permissions| CloudIdentity
+    GWS_ControlPlane -->|5. Connect| GWS_VM_CPU
+    GWS_ControlPlane -->|5. Connect| GWS_VM_GPU
 
     %% Network & Peering
     GWS_VM_CPU -.->|VPC Peering| Subnet
@@ -75,10 +74,9 @@ graph TB
 
 ## Architectural Design
 
-### 1. Identity Federation & Secure Access (Okta & IAP)
+### 1. Identity Federation (Okta & Cloud Identity)
 * **Identity Provider (IdP)**: Corporate user accounts are managed in an external IdP (Okta), federated with Google Cloud Identity for Single Sign-On (SSO).
-* **Identity-Aware Proxy (IAP) for Web Traffic**: Natively managed by the Google Cloud Workstations service. GWS proxies HTTP/HTTPS traffic to the workstation container, enforcing access control based on user identity and IAM roles (`roles/workstations.user`) without manual IAP configuration.
-* **IAP TCP Forwarding for SSH Traffic**: Configured via Terraform. A firewall rule (`google_compute_firewall.iap-allow`) is deployed in the VPC to allow Google IAP forwarding IP ranges to establish SSH tunnels (port 22) to the workstation VM instances.
+* **Workstations Access Management**: Secure access is managed by the Google Cloud Workstations service. It intercepts incoming HTTP/HTTPS connections, validates the user's federated identity, and verifies they hold the necessary IAM role (`roles/workstations.user`) before proxying traffic to the workstation VM instance.
 
 ### 2. Multi-Project and Peering Layout
 * **Host Project (Shared VPC)**: Centralizes networking. The workstation VMs consume internal IP addresses in a Shared VPC subnet. 
